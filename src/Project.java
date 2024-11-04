@@ -13,17 +13,19 @@ import javax.swing.*;
 
 public class Project implements ActionListener {
     private JFrame mainFrame;
-    private JLabel dogImage = new JLabel();
-    private JLabel catImage = new JLabel();
+    private JPanel dogImage = new JPanel();
+    private JPanel catImage = new JPanel();
     private JButton dogButton = new JButton("Vote dog");
     private JButton catButton = new JButton("Vote cat");
+    JLabel image = new JLabel("error3",JLabel.CENTER);
+    ReadJson reader = new ReadJson();
 
 
     private int WIDTH = 800;
     private int HEIGHT = 700;
 
 
-    public Project() {
+    public Project() throws IOException {
         prepareGUI();
     }
 
@@ -45,8 +47,11 @@ public class Project implements ActionListener {
         mainFrame.add(dogButton);
         mainFrame.add(catButton);
         mainFrame.setVisible(true);
-        System.out.println(ReadJson.catImage.image);
-        System.out.println(ReadJson.dogImage.image);
+        try {
+            reader.pull();
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
@@ -57,7 +62,6 @@ public class Project implements ActionListener {
     private class ButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            ReadJson reader = new ReadJson();
             try {
                 reader.pull();
             } catch (ParseException ex) {
@@ -67,29 +71,44 @@ public class Project implements ActionListener {
     }
 
     public void addImage() throws IOException {
-//        URL url = new URL(ReadJson.catImage.image);
-//        BufferedImage ErrorImage = ImageIO.read(new File("Error.png"));
-//        BufferedImage inputImageBuff = ImageIO.read(url.openStream());
-//
-//
-//        ImageIcon inputImage;
-//        if (inputImageBuff != null) {
-//            inputImage = new ImageIcon(inputImageBuff.getScaledInstance(800, 700, Image.SCALE_SMOOTH));
-//            if (inputImage != null) {
-//                imageLabel = new JLabel(inputImage);
-//            } else {
-//                imageLabel =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
-//
-//            }
-//            imagePanel.removeAll();
-//            imagePanel.repaint();
-//
-//            imagePanel.add(imageLabel);
-//
-//        }
-//        else{
-//            imageLabel =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
-//
-//        }
+        try{
+        URL url = new URL(reader.catImage.image);
+        BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
+        BufferedImage inputImageBuff = ImageIO.read(url.openStream());
+
+
+        ImageIcon inputImage;
+        if (inputImageBuff != null) {
+            inputImage = new ImageIcon(inputImageBuff.getScaledInstance(800, 700, Image.SCALE_SMOOTH));
+            if (inputImage != null) {
+                image = new JLabel(inputImage);
+            } else {
+                image =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
+
+            }
+            catImage.removeAll();
+            catImage.repaint();
+
+            catImage.add(image);
+
+        }
+        else{
+            image =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
+
+        }
+
+    } catch (IOException e) {
+        System.out.println(e);
+        System.out.println("sadness");
+        BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
+        JLabel imageLabel = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
+
+        catImage.removeAll();
+        catImage.repaint();
+        catImage.add(imageLabel);
+        mainFrame.add(catImage);
+
     }
+
+}
 }

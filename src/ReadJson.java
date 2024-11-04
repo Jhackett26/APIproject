@@ -13,8 +13,8 @@ import org.json.simple.parser.ParseException;
 
 // Program for print data in JSON format.x
 public class ReadJson {
-    static cat catImage = new cat("/");
-    static dog dogImage = new dog("/");
+    cat catImage = new cat("error");
+    dog dogImage = new dog("error");
 
     public static void main(String args[]) throws ParseException {
         // In java JSONObject is used to create JSON object
@@ -64,11 +64,11 @@ public class ReadJson {
             JSONObject jsonObj = (JSONObject) jsonArray.get(0);
             String image = (String) jsonObj.get("url");
             catImage.image = image;
-            System.out.println(catImage.image);
         }
 
         catch (Exception e) {
             e.printStackTrace();
+            dogImage.image = "error2";
         }
 
         //--------------------------------------------------------------------------------------------
@@ -111,11 +111,11 @@ public class ReadJson {
             JSONObject jsonObj = (JSONObject) parser2.parse(totalJson);
             String image = (String) jsonObj.get("message");
             dogImage.image = image;
-            System.out.println(dogImage.image);
         }
 
         catch (Exception e) {
             e.printStackTrace();
+            dogImage.image = "error2";
         }
 
     }
