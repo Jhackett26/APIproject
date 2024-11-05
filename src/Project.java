@@ -4,10 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -17,7 +13,6 @@ public class Project implements ActionListener {
     private JPanel catImage = new JPanel();
     private JButton dogButton = new JButton("Vote dog");
     private JButton catButton = new JButton("Vote cat");
-    JLabel image = new JLabel("error3",JLabel.CENTER);
     ReadJson reader = new ReadJson();
 
 
@@ -25,14 +20,14 @@ public class Project implements ActionListener {
     private int HEIGHT = 700;
 
 
-    public Project() throws IOException {
+    public Project() {
         prepareGUI();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         Project swingControlDemo = new Project();
-        swingControlDemo.showEventDemo();
         swingControlDemo.addImage();
+        swingControlDemo.showEventDemo();
     }
 
     private void prepareGUI() {
@@ -70,45 +65,57 @@ public class Project implements ActionListener {
         }
     }
 
-    public void addImage() throws IOException {
-        try{
-        URL url = new URL(reader.catImage.image);
-        BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
-        BufferedImage inputImageBuff = ImageIO.read(url.openStream());
+    public void addImage() {
+        try {
 
-
-        ImageIcon inputImage;
-        if (inputImageBuff != null) {
-            inputImage = new ImageIcon(inputImageBuff.getScaledInstance(800, 700, Image.SCALE_SMOOTH));
-            if (inputImage != null) {
-                image = new JLabel(inputImage);
-            } else {
-                image =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
-
-            }
-            catImage.removeAll();
-            catImage.repaint();
-
-            catImage.add(image);
+           BufferedImage catErrorImage = ImageIO.read(new File("errorImage.png"));
+           ImageIcon catImageIcon= new ImageIcon(catErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH));
+           JLabel catImageLabel = new JLabel(catImageIcon);
+           catImage.add(catImageLabel);
 
         }
-        else{
-            image =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
+        catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+//        URL url = new URL(reader.catImage.image);
+//        BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
+//        BufferedImage inputImageBuff = ImageIO.read(url.openStream());
+//
+//
+//        ImageIcon inputImage;
+//        if (inputImageBuff != null) {
+//            inputImage = new ImageIcon(inputImageBuff.getScaledInstance(800, 700, Image.SCALE_SMOOTH));
+//            if (inputImage != null) {
+//                image = new JLabel(inputImage);
+//            } else {
+//                image =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
+//
+//            }
+//            catImage.removeAll();
+//            catImage.repaint();
+//
+//            catImage.add(image);
+//
+//        }
+//        else{
+//            image =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
+//
+//        }
+//
+//    } catch (IOException e) {
+//        System.out.println(e);
+//        System.out.println("sadness");
+//        BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
+//        JLabel imageLabel = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
+//
+//        catImage.removeAll();
+//        catImage.repaint();
+//        catImage.add(imageLabel);
+//        mainFrame.add(catImage);
+//
+//    }
 
         }
-
-    } catch (IOException e) {
-        System.out.println(e);
-        System.out.println("sadness");
-        BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
-        JLabel imageLabel = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(800, 589, Image.SCALE_SMOOTH)));
-
-        catImage.removeAll();
-        catImage.repaint();
-        catImage.add(imageLabel);
-        mainFrame.add(catImage);
-
     }
 
-}
-}
+
