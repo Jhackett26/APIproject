@@ -6,13 +6,20 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Project implements ActionListener {
     private JFrame mainFrame;
+    private JPanel imbeddedPanel = new JPanel();
+    private JPanel topPanel = new JPanel();
     private JPanel dogImage = new JPanel();
     private JPanel catImage = new JPanel();
+    int dogVotes = 0;
+    int catVotes = 0;
+    private JLabel dogVoteLabel = new JLabel("TOTAL DOG VOTES: 0");
+    private JLabel catVoteLabel = new JLabel("TOTAL CAT VOTES: 0");
     private JButton dogButton = new JButton("Vote dog");
     private JButton catButton = new JButton("Vote cat");
     JLabel image1 = new JLabel();
@@ -37,20 +44,25 @@ public class Project implements ActionListener {
     private void prepareGUI() {
         mainFrame = new JFrame();
         mainFrame.setSize(WIDTH, HEIGHT);
-        mainFrame.setLayout(new GridLayout(2, 2));
+        mainFrame.setLayout(new BorderLayout());
+        imbeddedPanel.setLayout(new GridLayout(2, 2));
+        topPanel.setLayout(new GridLayout(0, 2));
     }
 
     private void showEventDemo() {
-        mainFrame.add(dogImage);
-        mainFrame.add(catImage);
-        mainFrame.add(dogButton);
-        mainFrame.add(catButton);
+        mainFrame.add(imbeddedPanel);
+        mainFrame.add(topPanel, BorderLayout.NORTH);
+        topPanel.add(dogVoteLabel);
+        topPanel.add(catVoteLabel);
+        imbeddedPanel.add(dogImage);
+        imbeddedPanel.add(catImage);
+        imbeddedPanel.add(dogButton);
+        imbeddedPanel.add(catButton);
         mainFrame.setVisible(true);
-        try {
-            reader.pull();
-        } catch (ParseException ex) {
-            throw new RuntimeException(ex);
-        }
+        dogButton.setActionCommand("DOG");
+        dogButton.addActionListener(new ButtonClickListener());
+        catButton.setActionCommand("CAT");
+        catButton.addActionListener(new ButtonClickListener());
     }
 
     @Override
@@ -61,10 +73,30 @@ public class Project implements ActionListener {
     private class ButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            try {
-                reader.pull();
-            } catch (ParseException ex) {
-                throw new RuntimeException(ex);
+            if (command.equals("DOG")){
+                dogVotes+=1;
+                dogVoteLabel.setText("TOTAL DOG VOTES: " + dogVotes);
+                try {
+                    addImageDog();
+                    addImageCat();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
+
+            }
+            if (command.equals("CAT")){
+                catVotes+=1;
+                catVoteLabel.setText("TOTAL DOG VOTES: " + catVotes);
+                try {
+                    addImageDog();
+                    addImageCat();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ParseException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         }
     }
@@ -73,16 +105,6 @@ public class Project implements ActionListener {
         reader.pull();
         System.out.println(reader.dogImage.image);
         try {
-//
-//           BufferedImage catErrorImage = ImageIO.read(new File("errorImage.png"));
-//           ImageIcon catImageIcon= new ImageIcon(catErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH));
-//           JLabel catImageLabel = new JLabel(catImageIcon);
-//           catImage.add(catImageLabel);
-//
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
             URL url = new URL(reader.dogImage.image);
             BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
             BufferedImage inputImageBuff = ImageIO.read(url.openStream());
@@ -90,12 +112,12 @@ public class Project implements ActionListener {
 
             ImageIcon inputImage;
             if (inputImageBuff != null) {
-                inputImage = new ImageIcon(inputImageBuff.getScaledInstance(400, 350, Image.SCALE_SMOOTH));
+                inputImage = new ImageIcon(inputImageBuff.getScaledInstance(WIDTH/2, HEIGHT/2, Image.SCALE_SMOOTH));
                 if (inputImage != null) {
                     image1 = new JLabel(inputImage);
                 } else {
                     System.out.println("inputImage is null");
-                    image1 = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH)));
+                    image1 = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(WIDTH/2, HEIGHT/2, Image.SCALE_SMOOTH)));
 
                 }
                 dogImage.removeAll();
@@ -105,7 +127,7 @@ public class Project implements ActionListener {
 
             } else {
                 System.out.println("the other issue");
-                image1 = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH)));
+                image1 = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(WIDTH/2, HEIGHT/2, Image.SCALE_SMOOTH)));
 
             }
 
@@ -113,12 +135,12 @@ public class Project implements ActionListener {
             System.out.println(e);
             System.out.println("worst case scenario");
             BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
-            JLabel imageLabel = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH)));
+            JLabel imageLabel = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(WIDTH/2, HEIGHT/2, Image.SCALE_SMOOTH)));
 
             catImage.removeAll();
             catImage.repaint();
             catImage.add(imageLabel);
-            mainFrame.add(catImage);
+            imbeddedPanel.add(catImage);
 
         }
     }
@@ -126,16 +148,6 @@ public class Project implements ActionListener {
             reader.pull();
             System.out.println(reader.catImage.image);
             try {
-//
-//           BufferedImage catErrorImage = ImageIO.read(new File("errorImage.png"));
-//           ImageIcon catImageIcon= new ImageIcon(catErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH));
-//           JLabel catImageLabel = new JLabel(catImageIcon);
-//           catImage.add(catImageLabel);
-//
-//        }
-//        catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
                 URL url = new URL(reader.catImage.image);
                 BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
                 BufferedImage inputImageBuff = ImageIO.read(url.openStream());
@@ -143,12 +155,12 @@ public class Project implements ActionListener {
 
                 ImageIcon inputImage;
                 if (inputImageBuff != null) {
-                    inputImage = new ImageIcon(inputImageBuff.getScaledInstance(400, 350, Image.SCALE_SMOOTH));
+                    inputImage = new ImageIcon(inputImageBuff.getScaledInstance(WIDTH/2, HEIGHT/2, Image.SCALE_SMOOTH));
                     if (inputImage != null) {
                         image1 = new JLabel(inputImage);
                     } else {
                         System.out.println("inputImage is null");
-                        image1 =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH)));
+                        image1 =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(WIDTH/2, HEIGHT/2, Image.SCALE_SMOOTH)));
 
                     }
                     catImage.removeAll();
@@ -159,7 +171,7 @@ public class Project implements ActionListener {
                 }
                 else{
                     System.out.println("the other issue");
-                    image1 =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH)));
+                    image1 =new JLabel(new ImageIcon(ErrorImage.getScaledInstance(WIDTH/2, HEIGHT/2, Image.SCALE_SMOOTH)));
 
                 }
 
@@ -167,12 +179,12 @@ public class Project implements ActionListener {
                 System.out.println(e);
                 System.out.println("worst case scenario");
                 BufferedImage ErrorImage = ImageIO.read(new File("errorImage.png"));
-                JLabel imageLabel = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(400, 350, Image.SCALE_SMOOTH)));
+                JLabel imageLabel = new JLabel(new ImageIcon(ErrorImage.getScaledInstance(WIDTH/2, HEIGHT/2, Image.SCALE_SMOOTH)));
 
                 catImage.removeAll();
                 catImage.repaint();
                 catImage.add(imageLabel);
-                mainFrame.add(catImage);
+                imbeddedPanel.add(catImage);
 
             }
 
