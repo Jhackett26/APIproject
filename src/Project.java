@@ -88,7 +88,7 @@ public class Project implements ActionListener {
             }
             if (command.equals("CAT")){
                 catVotes+=1;
-                catVoteLabel.setText("TOTAL DOG VOTES: " + catVotes);
+                catVoteLabel.setText("TOTAL CAT VOTES: " + catVotes);
                 try {
                     addImageDog();
                     addImageCat();
@@ -103,6 +103,9 @@ public class Project implements ActionListener {
 
     public void addImageDog() throws IOException, ParseException {
         reader.pull();
+        while(reader.dogImage.image.contains(".gif")){
+            reader.pull();
+        }
         System.out.println(reader.dogImage.image);
         try {
             URL url = new URL(reader.dogImage.image);
@@ -146,6 +149,9 @@ public class Project implements ActionListener {
     }
         public void addImageCat() throws IOException, ParseException {
             reader.pull();
+            while(reader.dogImage.image.contains(".gif")){
+                reader.pull();
+            }
             System.out.println(reader.catImage.image);
             try {
                 URL url = new URL(reader.catImage.image);
