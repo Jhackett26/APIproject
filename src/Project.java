@@ -26,8 +26,9 @@ public class Project implements ActionListener {
     ReadJson reader = new ReadJson();
 
 
-    private int WIDTH = 800;
-    private int HEIGHT = 700;
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    double WIDTH = screenSize.getWidth();
+    double HEIGHT = screenSize.getHeight();
 
 
     public Project() throws IOException {
@@ -43,7 +44,7 @@ public class Project implements ActionListener {
 
     private void prepareGUI() {
         mainFrame = new JFrame();
-        mainFrame.setSize(WIDTH, HEIGHT);
+        mainFrame.setSize((int) WIDTH, (int) HEIGHT);
         mainFrame.setLayout(new BorderLayout());
         imbeddedPanel.setLayout(new GridLayout(2, 2));
         topPanel.setLayout(new GridLayout(0, 2));
@@ -112,7 +113,7 @@ public class Project implements ActionListener {
 
             if (!imageUrl.endsWith(".gif")) {
                 Image image = inputImageIcon.getImage();
-                Image scaledImage = image.getScaledInstance(WIDTH / 2, HEIGHT / 2, Image.SCALE_SMOOTH);
+                Image scaledImage = image.getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_SMOOTH);
                 inputImageIcon = new ImageIcon(scaledImage);  // Update the ImageIcon with the scaled image
             }
 
@@ -121,7 +122,7 @@ public class Project implements ActionListener {
             } else {
                 System.out.println("inputImageIcon is null");
                 BufferedImage errorImage = ImageIO.read(new File("errorImage.png"));
-                image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance(WIDTH / 2, HEIGHT / 2, Image.SCALE_SMOOTH)));
+                image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_SMOOTH)));
             }
 
             dogImage.removeAll();
@@ -133,7 +134,7 @@ public class Project implements ActionListener {
             System.out.println(e);
             System.out.println("Error loading image");
             BufferedImage errorImage = ImageIO.read(new File("errorImage.png"));
-            image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance(WIDTH / 2, HEIGHT / 2, Image.SCALE_SMOOTH)));
+            image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_SMOOTH)));
 
             dogImage.removeAll();
             dogImage.add(image1);
@@ -152,7 +153,7 @@ public class Project implements ActionListener {
 
             if (!imageUrl.endsWith(".gif")) {
                 Image image = inputImageIcon.getImage();
-                Image scaledImage = image.getScaledInstance(WIDTH / 2, HEIGHT / 2, Image.SCALE_SMOOTH);
+                Image scaledImage = image.getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_SMOOTH);
                 inputImageIcon = new ImageIcon(scaledImage);  // Update the ImageIcon with the scaled image
             }
 
@@ -161,7 +162,7 @@ public class Project implements ActionListener {
             } else {
                 System.out.println("inputImageIcon is null");
                 BufferedImage errorImage = ImageIO.read(new File("errorImage.png"));
-                image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance(WIDTH / 2, HEIGHT / 2, Image.SCALE_SMOOTH)));
+                image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_SMOOTH)));
             }
 
             catImage.removeAll();
@@ -173,7 +174,7 @@ public class Project implements ActionListener {
             System.out.println(e);
             System.out.println("Error loading image");
             BufferedImage errorImage = ImageIO.read(new File("errorImage.png"));
-            image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance(WIDTH / 2, HEIGHT / 2, Image.SCALE_SMOOTH)));
+            image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_SMOOTH)));
 
             catImage.removeAll();
             catImage.add(image1);
