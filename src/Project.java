@@ -3,8 +3,7 @@ import org.json.simple.parser.ParseException;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.Objects;
 import javax.imageio.ImageIO;
@@ -18,6 +17,7 @@ public class Project implements ActionListener {
     private JPanel catImage = new JPanel();
     int dogVotes = 0;
     int catVotes = 0;
+    String savedVotes = loadInt();
     private JLabel dogVoteLabel = new JLabel("TOTAL DOG VOTES: 0");
     private JLabel catVoteLabel = new JLabel("TOTAL CAT VOTES: 0");
     private JButton dogButton = new JButton("Vote dog");
@@ -53,8 +53,6 @@ public class Project implements ActionListener {
     private void showEventDemo() {
         mainFrame.add(imbeddedPanel);
         mainFrame.add(topPanel, BorderLayout.NORTH);
-        topPanel.add(dogVoteLabel);
-        topPanel.add(catVoteLabel);
         imbeddedPanel.add(dogImage);
         imbeddedPanel.add(catImage);
         imbeddedPanel.add(dogButton);
@@ -70,12 +68,26 @@ public class Project implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
     }
-
+    public void pullVotes(){
+        if(!(savedVotes == null)) {
+            String savedCatVotes = savedVotes.substring(0, savedVotes.indexOf(" "));
+            String savedDogVotes = savedVotes.substring(savedVotes.indexOf(" ") + 1);
+            System.out.println(savedCatVotes);
+            System.out.println(savedDogVotes);
+            catVotes = Integer.parseInt(savedCatVotes);
+            dogVotes = Integer.parseInt(savedDogVotes);
+            dogVoteLabel.setText("TOTAL DOG VOTES: "+dogVotes);
+            catVoteLabel.setText("TOTAL CAT VOTES: "+catVotes);
+            topPanel.add(dogVoteLabel);
+            topPanel.add(catVoteLabel);
+        }
+    }
     private class ButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
             if (command.equals("DOG")) {
                 dogVotes += 1;
+                saveVotes(catVotes,dogVotes);
                 dogVoteLabel.setText("TOTAL DOG VOTES: " + dogVotes);
                 try {
                     addImageDog();
@@ -89,6 +101,7 @@ public class Project implements ActionListener {
             }
             if (command.equals("CAT")) {
                 catVotes += 1;
+                saveVotes(catVotes,dogVotes);
                 catVoteLabel.setText("TOTAL CAT VOTES: " + catVotes);
                 try {
                     addImageDog();
@@ -144,6 +157,7 @@ public class Project implements ActionListener {
     }
 
     public void addImageCat() throws IOException, ParseException {
+        pullVotes();
         reader.pull();
         System.out.println(reader.catImage.image);
         try {
@@ -182,4 +196,21 @@ public class Project implements ActionListener {
             catImage.repaint();
         }
     }
+
+        public static void saveVotes(int catVotes, int dogVotes) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("saved_votes"))) {
+                writer.write(Integer.toString(catVotes)+ " "+ Integer.toString(dogVotes));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        public static String loadInt() {
+            try (BufferedReader reader = new BufferedReader(new FileReader("saved_votes"))) {
+                String line = reader.readLine();
+                return (line);
+            } catch (IOException | NumberFormatException e) { System.out.println("An error occurred while reading from the file.");
+                e.printStackTrace();
+                return "0 0";
+            }
+        }
 }
