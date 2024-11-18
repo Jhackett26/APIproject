@@ -73,15 +73,15 @@ public class Project implements ActionListener {
         if(!(savedVotes == null)) {
             String savedCatVotes = savedVotes.substring(0, savedVotes.indexOf(" "));
             String savedDogVotes = savedVotes.substring(savedVotes.indexOf(" ") + 1);
-            System.out.println(savedDogVotes);
-            System.out.println(savedCatVotes);
             catVotes = Integer.parseInt(savedCatVotes);
             dogVotes = Integer.parseInt(savedDogVotes);
-            dogVoteLabel.setText("TOTAL DOG VOTES: "+dogVotes);
-            catVoteLabel.setText("TOTAL CAT VOTES: "+catVotes);
+        }
+//            System.out.println(dogVotes);
+//            System.out.println(catVotes);
+            dogVoteLabel.setText("TOTAL DOG VOTES: " + dogVotes);
+            catVoteLabel.setText("TOTAL CAT VOTES: " + catVotes);
             topPanel.add(dogVoteLabel);
             topPanel.add(catVoteLabel);
-        }
     }
     private class ButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -118,7 +118,7 @@ public class Project implements ActionListener {
 
     public void addImageDog() throws IOException, ParseException {
         reader.pull();
-        System.out.println(reader.dogImage.image);
+//        System.out.println(reader.dogImage.image);
         try {
 
             String imageUrl = reader.dogImage.image;
@@ -159,7 +159,7 @@ public class Project implements ActionListener {
 
     public void addImageCat() throws IOException, ParseException {
         reader.pull();
-        System.out.println(reader.catImage.image);
+//        System.out.println(reader.catImage.image);
         try {
             String imageUrl = reader.catImage.image;
             URL url = new URL(imageUrl);
