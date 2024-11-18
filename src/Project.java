@@ -37,6 +37,7 @@ public class Project implements ActionListener {
 
     public static void main(String[] args) throws IOException, ParseException {
         Project swingControlDemo = new Project();
+        swingControlDemo.pullVotes();
         swingControlDemo.addImageCat();
         swingControlDemo.addImageDog();
         swingControlDemo.showEventDemo();
@@ -72,8 +73,8 @@ public class Project implements ActionListener {
         if(!(savedVotes == null)) {
             String savedCatVotes = savedVotes.substring(0, savedVotes.indexOf(" "));
             String savedDogVotes = savedVotes.substring(savedVotes.indexOf(" ") + 1);
-            System.out.println(savedCatVotes);
             System.out.println(savedDogVotes);
+            System.out.println(savedCatVotes);
             catVotes = Integer.parseInt(savedCatVotes);
             dogVotes = Integer.parseInt(savedDogVotes);
             dogVoteLabel.setText("TOTAL DOG VOTES: "+dogVotes);
@@ -157,7 +158,6 @@ public class Project implements ActionListener {
     }
 
     public void addImageCat() throws IOException, ParseException {
-        pullVotes();
         reader.pull();
         System.out.println(reader.catImage.image);
         try {

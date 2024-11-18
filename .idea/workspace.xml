@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53bab796-f446-4af8-a5f2-7162f5406402" name="Changes" comment="sizing&#10;now maybe store local vote data">
+    <list default="true" id="53bab796-f446-4af8-a5f2-7162f5406402" name="Changes" comment="worked on saving between runs. still kind of broken">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Project.java" afterDir="false" />
     </list>
@@ -149,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731352555566</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="worked on saving between runs. still kind of broken">
+      <option name="closed" value="true" />
+      <created>1731687170902</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1731687170902</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -171,6 +179,7 @@
     <MESSAGE value="added gif filtering" />
     <MESSAGE value="added gif support!!" />
     <MESSAGE value="sizing&#10;now maybe store local vote data" />
-    <option name="LAST_COMMIT_MESSAGE" value="sizing&#10;now maybe store local vote data" />
+    <MESSAGE value="worked on saving between runs. still kind of broken" />
+    <option name="LAST_COMMIT_MESSAGE" value="worked on saving between runs. still kind of broken" />
   </component>
 </project>
