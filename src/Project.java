@@ -159,10 +159,10 @@ public class Project implements ActionListener {
 
     public void addImageCat() throws IOException, ParseException {
         reader.pull();
-        while(!reader.catImage.image.endsWith(".gif")){
-            reader.pull();
-        }
-        System.out.println(reader.catImage.image);
+//        while(!reader.catImage.image.endsWith(".gif")){
+//            reader.pull();
+//        }
+//        System.out.println(reader.catImage.image);
         try {
             String imageUrl = reader.catImage.image;
             URL url = new URL(imageUrl);
