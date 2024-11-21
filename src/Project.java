@@ -159,30 +159,32 @@ public class Project implements ActionListener {
 
     public void addImageCat() throws IOException, ParseException {
         reader.pull();
-//        System.out.println(reader.catImage.image);
+        while(!reader.catImage.image.endsWith(".gif")){
+            reader.pull();
+        }
+        System.out.println(reader.catImage.image);
         try {
             String imageUrl = reader.catImage.image;
             URL url = new URL(imageUrl);
-            ImageIcon inputImageIcon = new ImageIcon(url);
 
-            if (!imageUrl.endsWith(".gif")) {
+            if (imageUrl.endsWith(".gif")) {
+                ImageIcon imgIcon = new ImageIcon(url);
+                imgIcon.setImage(imgIcon.getImage().getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_DEFAULT));
+                image1 = new JLabel(imgIcon);
+            }else {
+                ImageIcon inputImageIcon = new ImageIcon(url);
                 Image image = inputImageIcon.getImage();
                 Image scaledImage = image.getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_SMOOTH);
-                inputImageIcon = new ImageIcon(scaledImage);  // Update the ImageIcon with the scaled image
-            }
-
-            if (inputImageIcon.getImage() != null) {
+                inputImageIcon = new ImageIcon(scaledImage);
                 image1 = new JLabel(inputImageIcon);
-            } else {
-                System.out.println("inputImageIcon is null");
-                BufferedImage errorImage = ImageIO.read(new File("errorImage.png"));
-                image1 = new JLabel(new ImageIcon(errorImage.getScaledInstance((int) (WIDTH / 2), (int) (HEIGHT / 2), Image.SCALE_SMOOTH)));
             }
-
             catImage.removeAll();
             catImage.add(image1);
             catImage.revalidate();
             catImage.repaint();
+
+
+
 
         } catch (IOException e) {
             System.out.println(e);

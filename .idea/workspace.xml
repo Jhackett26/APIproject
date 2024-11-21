@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="53bab796-f446-4af8-a5f2-7162f5406402" name="Changes" comment="saves votes. load times are bad but whatever">
+    <list default="true" id="53bab796-f446-4af8-a5f2-7162f5406402" name="Changes" comment="stopped printing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saved_votes" beforeDir="false" afterPath="$PROJECT_DIR$/saved_votes" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Project.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -165,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731935715648</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="stopped printing">
+      <option name="closed" value="true" />
+      <created>1731937471269</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1731937471269</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -189,6 +198,8 @@
     <MESSAGE value="sizing&#10;now maybe store local vote data" />
     <MESSAGE value="worked on saving between runs. still kind of broken" />
     <MESSAGE value="saves votes. load times are bad but whatever" />
-    <option name="LAST_COMMIT_MESSAGE" value="saves votes. load times are bad but whatever" />
+    <MESSAGE value="stopped prniting" />
+    <MESSAGE value="stopped printing" />
+    <option name="LAST_COMMIT_MESSAGE" value="stopped printing" />
   </component>
 </project>
